@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>花音 · 情绪塔罗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet" />
+  <script type="module" crossorigin src="./assets/index-BjV33TSE.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CQsWoCcb.css">
+</head>
+<body>
+  <div id="js-error-banner" class="js-error-banner">
+    <p style="font-size:1.2rem;margin-bottom:12px;">页面加载失败</p>
+    <p>请双击文件夹里的 <strong>启动.bat</strong> 打开，<br>不要直接双击 index.html。</p>
+    <p style="margin-top:16px;color:#8a7a9e;font-size:0.85rem;" id="js-error-detail"></p>
+  </div>
+  <div class="bg-layer">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="stars"></div>
+    <div class="petals" aria-hidden="true"></div>
+  </div>
+
+  <div class="huayin-character-bg" aria-hidden="true">
+    <img data-huayin-img src="" alt="" class="huayin-character-img" />
+  </div>
+
+  <p class="app-disclaimer" aria-label="免责声明">本占卜结果仅供娱乐参考，不构成任何专业建议</p>
+
+  <!-- 沉浸式首页 -->
+  <section id="page-home" class="page active page-immersive">
+    <div class="home-scene">
+      <div class="home-deco" id="home-deco" aria-hidden="true"></div>
+      <div class="home-vignette"></div>
+
+      <div class="home-body">
+        <p class="home-brand">花音</p>
+
+        <div class="home-presence">
+          <div class="home-character-wrap">
+            <div class="home-character-glow"></div>
+            <img
+              data-huayin-img
+              src=""
+              alt="花音"
+              class="home-character-img"
+              width="96"
+              height="96"
+            />
+          </div>
+          <p class="home-voice" id="huayin-greeting">牌面已洗好，今天想先看哪个问题？</p>
+        </div>
+
+        <div class="home-ritual">
+          <div class="home-question-ring">
+            <textarea id="question-input" class="home-question" placeholder="在心里默念你的问题……" rows="2" maxlength="100"></textarea>
+            <span class="home-char"><span id="char-count">0</span>/100</span>
+          </div>
+
+          <div class="home-spreads" id="spread-grid" role="tablist" aria-label="选择牌阵"></div>
+
+          <div class="home-quick-scroll">
+            <div class="home-quick-track" id="quick-chips"></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="home-footer">
+        <button id="btn-start" class="home-cta" disabled>
+          <span class="cta-shine"></span>
+          开启牌阵
+        </button>
+      </footer>
+    </div>
+  </section>
+
+  <!-- 洗牌 -->
+  <section id="page-shuffle" class="page page-immersive">
+    <div class="ritual-container">
+      <p class="ritual-hint" id="shuffle-hint">嗯……让我好好洗一洗牌</p>
+      <div class="shuffle-stage" id="shuffle-stage">
+        <div class="shuffle-pile" id="shuffle-pile"></div>
+      </div>
+      <button id="btn-shuffle" class="btn-primary btn-ritual">
+        <span>洗牌</span>
+      </button>
+      <button id="btn-to-draw" class="btn-primary btn-ritual hidden">
+        <span>开始抽牌</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 切牌 · Quin 风格 -->
+  <section id="page-cut" class="page page-cut">
+    <div class="cut-page-bg"></div>
+    <button type="button" class="cut-close" id="btn-cut-back" aria-label="返回">×</button>
+
+    <div class="cut-body">
+      <h1 class="cut-title">切牌</h1>
+      <p class="cut-subtitle">横向滑动屏幕进行切牌，支持多次切牌</p>
+
+      <div class="cut-zone" id="cut-zone">
+        <div class="cut-deck">
+          <div class="cut-stack cut-stack--back" id="cut-stack-back"></div>
+          <div class="cut-stack cut-stack--front" id="cut-stack-front"></div>
+        </div>
+      </div>
+
+      <button type="button" class="cut-again" id="btn-cut-again" disabled>
+        <span class="cut-again-icon" aria-hidden="true">↻</span>
+        再切牌一次
+      </button>
+    </div>
+
+    <button type="button" class="cut-next" id="btn-cut-next" disabled>下一步</button>
+  </section>
+
+  <!-- 选牌 · 梦幻弧形牌扇 -->
+  <section id="page-draw" class="page page-dream-draw">
+    <div class="dream-page-bg"></div>
+    <header class="dream-header">
+      <button type="button" class="dream-close" id="btn-draw-back" aria-label="返回">×</button>
+      <h1 class="dream-title">抽取塔罗牌</h1>
+      <button type="button" class="dream-auto" id="btn-auto-draw">自动抽卡</button>
+    </header>
+
+    <div class="dream-slots" id="dream-slots"></div>
+    <p class="dream-hint" id="draw-hint">左右滑动（滚动鼠标） 跟随直觉抽卡</p>
+
+    <div class="dream-fan-viewport" id="dream-fan-viewport">
+      <div class="dream-fan-stage" id="dream-fan-stage"></div>
+    </div>
+  </section>
+
+  <!-- 翻牌 -->
+  <section id="page-flip" class="page">
+    <div class="flip-stage">
+      <div class="flip-card-wrap" id="flip-card-wrap">
+        <div class="tarot-card flip-inner" id="flip-card">
+          <div class="card-face card-back"></div>
+          <div class="card-face card-front" id="flip-front"></div>
+        </div>
+      </div>
+      <p class="flip-label" id="flip-label"></p>
+    </div>
+  </section>
+
+  <!-- 结果 -->
+  <section id="page-result" class="page page-dream-result">
+    <div class="dream-page-bg"></div>
+    <header class="dream-result-header">
+      <button type="button" class="dream-close" id="btn-result-close" aria-label="关闭">×</button>
+      <div class="dream-result-top">
+        <h1 class="dream-title">抽取结果</h1>
+        <button type="button" class="dream-redraw" id="btn-retry">
+          重新抽取
+          <span class="dream-redraw-icon" aria-hidden="true">↻</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="dream-result-cards" id="dream-result-cards"></div>
+
+    <div class="dream-reading-panel" id="dream-reading-panel">
+      <p class="dream-result-question" id="result-question"></p>
+      <div class="huayin-bubble">
+        <div class="bubble-avatar">
+          <img data-huayin-img src="" alt="" class="bubble-avatar-img" />
+        </div>
+        <div class="bubble-text" id="result-emotional"></div>
+      </div>
+      <div id="result-overview"></div>
+      <div class="reading-cards" id="result-cards"></div>
+      <div class="result-advice" id="result-advice"></div>
+      <p class="result-closing" id="result-closing"></p>
+    </div>
+
+    <footer class="dream-result-footer">
+      <button type="button" class="dream-confirm-btn" id="btn-confirm-result">确认结果</button>
+    </footer>
+  </section>
+
+</body>
+</html>
